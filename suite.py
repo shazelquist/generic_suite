@@ -35,13 +35,15 @@ __types__ = {
 }
 
 
-def add_func(func):
+def add_func(func, alias=None):
     """
-    suite(func)
+    suite(func, alias=None)
 
     Adds function to the list of options for cmdline suite
     Can be invoked manually or through decorators
 
+    alias provides a method for prettynames, that may be easier to to type
+    or make more sense from this interface
     Examples:
         def foo(param):
             pass
@@ -52,7 +54,9 @@ def add_func(func):
         def bar(param):
             pass
     """
-    __suite_methods__[func.__name__] = func
+    if not alias:
+        alias = func.__name__
+    __suite_methods__[alias] = func
 
     def wrapped(*args, **kwargs):
         func(*args, **kwargs)
@@ -105,17 +109,19 @@ def suite_methods():
         print("\t{}{}".format(k, signature(__suite_methods__[k])), end="\n")
 
 
-def run_suite():
+def run_suite(pargv=None):
     """
-    run_suite()
+    run_suite(pargv=None)
 
     runs the suite given argv values
 
     if param_convert enabled
     arguments follow: "typename:value" format.
+    argument provides manual method instead of taking information from argv
     """
     i = 0
-    pargv = argv[1:]
+    if not pargv:
+        pargv = argv[1:]
     if not pargv:  # not pargv
         suite_methods()
     while i < len(pargv):
