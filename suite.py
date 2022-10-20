@@ -1,5 +1,5 @@
-#!C:/Python_X64/python
 #!/usr/bin/python3
+#!C:/Python_X64/python
 """
 Provides functionality for quickly developing python tests & operations by methods
 
@@ -104,9 +104,18 @@ def echo(*args, **kwargs):
 
 @add_func
 def suite_methods():
+    """
+    suite_methods
+
+    prints avaliable methods and their signatures
+    """
     print("Avaliable methods:")
     for k in __suite_methods__:
         print("\t{}{}".format(k, signature(__suite_methods__[k])), end="\n")
+
+
+# add suite_methods as default for empty queries
+add_func(suite_methods, "__empty__")
 
 
 def run_suite(pargv=None):
@@ -118,12 +127,15 @@ def run_suite(pargv=None):
     if param_convert enabled
     arguments follow: "typename:value" format.
     argument provides manual method instead of taking information from argv
+
+    If no parameters are given, and argv is not avaliable, run default '__empty__'
+    generically mapped to suite_methods
     """
     i = 0
     if not pargv:
         pargv = argv[1:]
     if not pargv:  # not pargv
-        suite_methods()
+        __suite_methods__["__empty__"]()
     while i < len(pargv):
         if pargv[i] in __suite_methods__.keys():
             lim = i + 1

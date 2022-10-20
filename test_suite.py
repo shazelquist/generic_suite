@@ -1,5 +1,5 @@
-#!C:/Python_X64/python
 #!/usr/bin/python3
+#!C:/Python_X64/python
 # Shane_Hazelquist #Date: Saturday, 8/13/2022  #Time: 3:3.11
 # Imports:
 import suite
@@ -8,13 +8,13 @@ import suite
 # -Test functionality of suite
 
 
-@add_func
+@suite.add_func
 def test(name="generic"):
     print("hello, {}".format(name))
 
 
-@add_func
-@param_convert
+@suite.add_func
+@suite.param_convert
 def hungry(arg, *args, **kwargs):
     """
     hungry
